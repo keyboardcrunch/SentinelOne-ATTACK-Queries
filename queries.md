@@ -37,3 +37,12 @@ Detection of UAC bypass through tampering with Shell Open for .ms-settings or .m
 ```
 SrcProcCmdLine ContainsCIS "ms-settings\shell\open\command" OR SrcProcCmdLine ContainsCIS "mscfile\shell\open\command"
 ```
+
+### T1574.012 COR Profiler
+Atomics: [T1574.012](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.012/T1574.012.md)
+
+Detection of unmanaged COR profiler hooking of .NET CLR through registry or process command.
+
+```
+(SrcProcCmdScript Contains "COR_" AND SrcProcCmdScript Contains "\Environment") OR RegistryKeyPath Contains "COR_PROFILER_PATH" OR SrcProcCmdScript Contains "$env:COR_"
+```
