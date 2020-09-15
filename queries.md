@@ -109,3 +109,13 @@ Detects addition of logon scripts through command line or registry methods.
 ```
 SrcProcCmdLine ContainsCIS "UserInitMprLogonScript" OR (RegistryKeyPath ContainsCIS "UserInitMprLogonScript" AND EventType = "Registry Value Create")
 ```
+
+### T1546.007 Netsh Helper DLL
+Atomics: [T1546.007]()
+
+Detection of "helper" dlls with network command shell, through command arguments or registry modification.
+
+```
+(TgtProcName = "netsh.exe" AND TgtProcCmdLine ContainsCIS "add helper") OR (RegistryPath ContainsCIS "SOFTWARE\Microsoft\NetSh" AND EventType = "Registry Value Create")
+```
+
