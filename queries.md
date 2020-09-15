@@ -111,7 +111,7 @@ SrcProcCmdLine ContainsCIS "UserInitMprLogonScript" OR (RegistryKeyPath Contains
 ```
 
 ### T1546.007 Netsh Helper DLL
-Atomics: [T1546.007]()
+Atomics: [T1546.007](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.007/T1546.007.md)
 
 Detection of "helper" dlls with network command shell, through command arguments or registry modification.
 
@@ -119,3 +119,11 @@ Detection of "helper" dlls with network command shell, through command arguments
 (TgtProcName = "netsh.exe" AND TgtProcCmdLine ContainsCIS "add helper") OR (RegistryPath ContainsCIS "SOFTWARE\Microsoft\NetSh" AND EventType = "Registry Value Create")
 ```
 
+### T1134.004 Parent PID Spoofing
+Atomics: [T1134.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1134.004/T1134.004.md)
+
+Detects parent PID spoofing through Cross Process indicators (SrcProcParentName limits scope heavily) as well as detecting the use of PPID-Spoof powershell script through Command Scripts indicators.
+
+```
+(TgtProcRelation = "not_in_storyline" AND EventType = "Open Remote Process Handle" AND SrcProcParentName In Contains Anycase ("userinit.exe","powershell.exe","cmd.exe") AND TgtProcName != "sihost.exe" And TgtProcIntegrityLevel  != "LOW" AND TgtProcName Not In ("SystemSettings.exe")) OR (SrcProcCmdScript ContainsCIS "PPID-Spoof" AND SrcProcCmdScript ContainsCIS "hSpoofParent = [Kernel32]::OpenProcess")
+```
