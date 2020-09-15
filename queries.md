@@ -136,3 +136,12 @@ Detects creation or modification of the file at `C:\program.exe` for exploiting 
 ```
 (FileFullName = "C:\program.exe" AND EventType In ("File Creation","File Modification")) OR TgtProcImagePath = "C:\program.exe"
 ```
+
+### T1546.013 Malicious Process Start Added to Powershell Profile
+Atomics: [T1546.013](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.013/T1546.013.md)
+
+Detects the addition of process execution strings (`TgtProcCmdLine In Contains Anycase (list)`)to the powershell profile, through CommandLine and CommandScript indicators.
+
+```
+(SrcProcCmdScript ContainsCIS "Add-Content $profile -Value" AND SrcProcCmdScript ContainsCIS "Start-Process") OR (TgtProcCmdLine ContainsCIS "Add-Content $profile" AND TgtProcCmdLine In Contains Anycase ("Start-Process","& ","cmd.exe /c"))
+```
