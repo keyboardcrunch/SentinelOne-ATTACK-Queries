@@ -24,7 +24,6 @@ Atomics: [T1546.010](https://github.com/redcanaryco/atomic-red-team/blob/master/
 Detects application shimming through sdbinst or registry modification.
 
 ```
---- T1546 Application Shimming
 (SrcProcName = "sdbinst.exe" and ProcessCmd ContainsCIS ".sdb") OR ((RegistryKeyPath ContainsCIS "AppInit_DLLs" OR RegistryPath  ContainsCIS "AppCompatFlags") AND (EventType = "Registry Value Create" OR EventType = "Registry Value Modified"))
 ```
 
@@ -45,4 +44,29 @@ Detection of unmanaged COR profiler hooking of .NET CLR through registry or proc
 
 ```
 (SrcProcCmdScript Contains "COR_" AND SrcProcCmdScript Contains "\Environment") OR RegistryKeyPath Contains "COR_PROFILER_PATH" OR SrcProcCmdScript Contains "$env:COR_"
+```
+
+### T1546.001 Change Default File Association
+Atomics: [1546.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.001/T1546.001.md)
+
+Detection of file association changes. Detection by registry is noisy due to problem filtering on registry root, so install/uninstall apps create noise.
+
+```
+--- File assoc change by registry
+RegistryKeyPath In Contains Anycase ( "\shell\open\command" , "\shell\print\command" , "\shell\printto\command" ) AND EventType In ( "Registry Value Create" , "Registry Value Modified" )
+```
+
+Recommended (for now)
+```
+--- File assoc change by assoc command
+TgtProcCmdLine ContainsCIS "assoc" and TgtProcCmdLine RegExp ".*=.*"
+```
+
+###  T1574.001 DLL Search Order Hijacking
+Atomics: [T1574.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.001/T1574.001.md)
+
+Detection of DLL Search for AMSI bypass. Search order bypasses can target more than AMSI, so this can be expanded upon greatly by switching the `ContainsCIS` to `In Contains Anycase(dll list)`.
+
+```
+(FileFullName ContainsCIS "amsi.dll" AND FileFullName Does Not ContainCIS "System32") AND EventType = "File Creation"
 ```
