@@ -1,3 +1,6 @@
+# Windows Atomic Tests by ATT&CK Tactic & Technique
+## Privilege Escalation
+
 ### T1053.002 AT Scheduled Task
 Atomics: [T1053.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1053.002/T1053.002.md)
 
@@ -89,3 +92,11 @@ Detects enabling of Guest account, adding Guest account to groups, as well as ch
 (SrcProcCmdLine ContainsCIS "net localgroup" AND SrcProcCmdLine ContainsCIS "guest /add") OR (SrcProcCmdLine ContainsCIS "net user" AND SrcProcCmdLine ContainsCIS "/active:yes") OR (RegistryKeyPath In Contains ("Terminal Server\AllowTSConnections","Terminal Server\DenyTSConnections") AND EventType In ("Registry Value Create","Registry Value Modified"))
 ```
 
+### T1546.012 Image File Execution Options Injection
+Atomics: [T1546.012](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.012/T1546.012.md)
+
+Detection of Image File Execution Options tampering for persistence through Registry monitoring.
+
+```
+RegistryKeyPath In Contains Anycase ("CurrentVersion\Image File Execution Options","CurrentVersion\SilentProcessExit") AND RegistryKeyPath In Contains Anycase ("GlobalFlag","ReportingMode","MonitorProcess")
+```
