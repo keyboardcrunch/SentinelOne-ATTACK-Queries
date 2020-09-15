@@ -122,8 +122,17 @@ Detection of "helper" dlls with network command shell, through command arguments
 ### T1134.004 Parent PID Spoofing
 Atomics: [T1134.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1134.004/T1134.004.md)
 
-Detects parent PID spoofing through Cross Process indicators (SrcProcParentName limits scope heavily) as well as detecting the use of PPID-Spoof powershell script through Command Scripts indicators.
+Detects parent PID spoofing through Cross Process indicators (SrcProcParentName limits scope heavily) as well as detecting the use of PPID-Spoof powershell script through Command Scripts indicators. Update the `TgtProcName` list to filter noise.
 
 ```
 (TgtProcRelation = "not_in_storyline" AND EventType = "Open Remote Process Handle" AND SrcProcParentName In Contains Anycase ("userinit.exe","powershell.exe","cmd.exe") AND TgtProcName != "sihost.exe" And TgtProcIntegrityLevel  != "LOW" AND TgtProcName Not In ("SystemSettings.exe")) OR (SrcProcCmdScript ContainsCIS "PPID-Spoof" AND SrcProcCmdScript ContainsCIS "hSpoofParent = [Kernel32]::OpenProcess")
+```
+
+### T1574.009 Unquoted Service Path for program.exe
+Atomics: [T1574.009](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.009/T1574.009.md)
+
+Detects creation or modification of the file at `C:\program.exe` for exploiting unquoted services paths of Program Files folder.
+
+```
+(FileFullName = "C:\program.exe" AND EventType In ("File Creation","File Modification")) OR TgtProcImagePath = "C:\program.exe"
 ```
