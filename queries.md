@@ -149,7 +149,7 @@ Detects the addition of process execution strings (`TgtProcCmdLine In Contains A
 ### T1055.012 Process Hollowing
 Atomics: [T1055.012](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1055.012/T1055.012.md)
 
-Detect Process Hollowing using the Start-Hollow powershell script, through CommandLine or CommandScript indicators.
+Detect Process Hollowing using the Start-Hollow powershell script, through CommandLine and CommandScript indicators.
 
 The `IndicatorCategory = "Injection"` has a lot of noise, but in the future a combination of `EventType = "Duplicate Process Handle" AND TgtProcRelation = "storyline_child"` joined with some `ChildProcCount` or `CrossProcCount` > 0 may help filter the noise.
 
@@ -198,12 +198,20 @@ Focuses on Test 2: Detection .lnk or .url files written to Startup folders. Filt
 ### T1546.003 Windows Management Instrumentation Event Subscription
 Atomics: [T1546.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.003/T1546.003.md)
 
+Detect WMI Event Subs using the New-CimInstance cmdlet, through CommandLine and CommandScript indicators.
 
+```
+SrcProcCmdLine ContainsCIS "New-CimInstance -Namespace root/subscription" OR SrcProcCmdScript ContainsCIS "New-CimInstance -Namespace root/subscription"
+```
 
 ### T1543.003 Windows Service
 Atomics: [T1543.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1543.003/T1543.003.md)
 
+Detects creation and modification of windows services through binPath argument to sc.exe.
 
+```
+TgtProcName = "sc.exe" AND TgtProcCmdLine Contains "binPath="
+```
 
 ### T1547.004 Winlogon Helper DLL
 Atomics: [T1547.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.004/T1547.004.md)
