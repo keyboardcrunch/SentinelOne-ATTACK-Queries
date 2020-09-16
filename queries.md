@@ -178,14 +178,22 @@ RegistryKeyPath ContainsCIS "Control Panel\Desktop\SCRNSAVE.EXE" AND (EventType 
 ```
 
 ### T1547.005 Security Support Provider
-Atomics: [T1547.005]()
+Atomics: [T1547.005](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.005/T1547.005.md)
 
+Detection of changes to Security Support Provider through Registry modification. Filters most standard system changes with `SrcProcName Not In (list)` but there will be some noise from installers.
 
+```
+RegistryKeyPath ContainsCIS "\Control\Lsa\Security Packages" AND (SrcProcName Not In ("services.exe","SetupHost.exe","svchost.exe") AND SrcProcCmdLine Does Not ContainCIS "system32\wsauth.dll")
+```
 
 ### T1547.009 Shortcut Modification
-Atomics: [T1547.009]()
+Atomics: [T1547.009](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.009/T1547.009.md)
 
+Focuses on Test 2: Detection .lnk or .url files written to Startup folders. Filters noise with `SrcProcName Not In (list)` but you can remove noise from 3rd party update services updating their links by adding `SrcProcParentName != "userinit.exe"` to the query.
 
+```
+(FileFullName ContainsCIS "Microsoft\Windows\Start Menu\Programs\Startup" AND TgtFileExtension In Contains ("lnk","url") AND EventType = "File Creation") AND SrcProcName Not In ("ONENOTE.EXE","msiexec.exe")
+```
 
 ### T1546.003 Windows Management Instrumentation Event Subscription
 Atomics: [T1546.003]()
