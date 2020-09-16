@@ -1,4 +1,3 @@
-# Windows Atomic Tests by ATT&CK Tactic & Technique
 ## Privilege Escalation
 
 ### T1053.002 AT Scheduled Task
@@ -221,9 +220,4 @@ Detects Winlogon Helper Dll changes through Registry MetadataIndicator item, as 
 ```
 IndicatorMetadata In Contains Anycase ("Microsoft\Windows NT\CurrentVersion\Winlogon","Microsoft\Windows NT\CurrentVersion\Winlogon\Notify") AND IndicatorMetadata In Contains Anycase ("logon","Userinit","Shell") AND IndicatorMetadata Does Not ContainCIS "WINDOWS\system32\userinit.exe"
 ```
-
-
-## Defense Evasion
-### T1055.004 Asynchronous Procedure Call
-Atomics: [T1055.004]()
 
