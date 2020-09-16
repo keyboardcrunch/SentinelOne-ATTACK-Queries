@@ -145,3 +145,60 @@ Detects the addition of process execution strings (`TgtProcCmdLine In Contains A
 ```
 (SrcProcCmdScript ContainsCIS "Add-Content $profile -Value" AND SrcProcCmdScript ContainsCIS "Start-Process") OR (TgtProcCmdLine ContainsCIS "Add-Content $profile" AND TgtProcCmdLine In Contains Anycase ("Start-Process","& ","cmd.exe /c"))
 ```
+
+### T1055.012 Process Hollowing
+Atomics: [T1055.012](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1055.012/T1055.012.md)
+
+Detect Process Hollowing using the Start-Hollow powershell script, through CommandLine or CommandScript indicators.
+
+The `IndicatorCategory = "Injection"` has a lot of noise, but in the future a combination of `EventType = "Duplicate Process Handle" AND TgtProcRelation = "storyline_child"` joined with some `ChildProcCount` or `CrossProcCount` > 0 may help filter the noise.
+
+```
+--- Detect Start-Hollow.ps1 by command or content
+(SrcProcCmdScript ContainsCIS "Start-Hollow" AND SrcProcCmdScript ContainsCIS "[Hollow]::NtQueryInformationProcess") OR TgtProcCmdLine ContainsCIS "Start-Hollow"
+```
+
+### T1055 Process Injection
+Atomics: [T1055](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1055/T1055.md)
+
+Detects Process Injection through execution of MavInject, filtering out noisy/expected activity. `SrcProcParentName` filter narrows Cross Process items to HQ results.
+
+```
+(TgtProcName = "mavinject.exe" AND TgtProcCmdLine ContainsCIS "/injectrunning") AND (SrcProcName Not In ("AppVClient.exe") AND SrcProcParentName Not In ("smss.exe"))
+```
+
+
+### T1546.002 Screensaver
+Atomics: [T1546.002]()
+
+
+
+### T1547.005 Security Support Provider
+Atomics: [T1547.005]()
+
+
+
+### T1547.009 Shortcut Modification
+Atomics: [T1547.009]()
+
+
+
+### T1546.003 Windows Management Instrumentation Event Subscription
+Atomics: [T1546.003]()
+
+
+
+### T1543.003 Windows Service
+Atomics: [T1543.003]()
+
+
+
+### T1547.004 Winlogon Helper DLL
+Atomics: [T1547.004]()
+
+
+
+## Defense Evasion
+### T1055.004 Asynchronous Procedure Call
+Atomics: [T1055.004]()
+
