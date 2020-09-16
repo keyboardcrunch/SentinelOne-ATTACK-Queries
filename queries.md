@@ -186,7 +186,7 @@ Detection of changes to Security Support Provider through Registry modification.
 RegistryKeyPath ContainsCIS "\Control\Lsa\Security Packages" AND (SrcProcName Not In ("services.exe","SetupHost.exe","svchost.exe") AND SrcProcCmdLine Does Not ContainCIS "system32\wsauth.dll")
 ```
 
-### T1547.009 Shortcut Modification
+### T1547.009 Startup Shortcuts
 Atomics: [T1547.009](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.009/T1547.009.md)
 
 Focuses on Test 2: Detection .lnk or .url files written to Startup folders. Filters noise with `SrcProcName Not In (list)` but you can remove noise from 3rd party update services updating their links by adding `SrcProcParentName != "userinit.exe"` to the query.
@@ -196,18 +196,23 @@ Focuses on Test 2: Detection .lnk or .url files written to Startup folders. Filt
 ```
 
 ### T1546.003 Windows Management Instrumentation Event Subscription
-Atomics: [T1546.003]()
+Atomics: [T1546.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.003/T1546.003.md)
 
 
 
 ### T1543.003 Windows Service
-Atomics: [T1543.003]()
+Atomics: [T1543.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1543.003/T1543.003.md)
 
 
 
 ### T1547.004 Winlogon Helper DLL
-Atomics: [T1547.004]()
+Atomics: [T1547.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.004/T1547.004.md)
 
+Detects Winlogon Helper Dll changes through Registry MetadataIndicator item, as it holds the full registry change info but will only return data of the Indicators object type.
+
+```
+IndicatorMetadata In Contains Anycase ("Microsoft\Windows NT\CurrentVersion\Winlogon","Microsoft\Windows NT\CurrentVersion\Winlogon\Notify") AND IndicatorMetadata In Contains Anycase ("logon","Userinit","Shell") AND IndicatorMetadata Does Not ContainCIS "WINDOWS\system32\userinit.exe"
+```
 
 
 ## Defense Evasion
