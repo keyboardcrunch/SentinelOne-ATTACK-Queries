@@ -169,9 +169,13 @@ Detects Process Injection through execution of MavInject, filtering out noisy/ex
 
 
 ### T1546.002 Screensaver
-Atomics: [T1546.002]()
+Atomics: [T1546.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.002/T1546.002.md)
 
+Detects malicious changes to screensaver through Registry changes, filtering expected processes.
 
+```
+RegistryKeyPath ContainsCIS "Control Panel\Desktop\SCRNSAVE.EXE" AND (EventType In ("Registry Value Create","Registry Value Modified") AND SrcProcName Not In ("svchost.exe","SetupHost.exe"))
+```
 
 ### T1547.005 Security Support Provider
 Atomics: [T1547.005]()
