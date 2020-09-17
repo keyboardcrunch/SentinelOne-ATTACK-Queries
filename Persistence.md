@@ -1,13 +1,4 @@
-## Privilege Escalation
-
-### T1053.002 AT Scheduled Task
-Atomics: [T1053.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1053.002/T1053.002.md)
-
-Detect interactive process execution scheduled by AT command.
-
-```
-TgtProcName = "at.exe" AND TgtProcCmdLine ContainsCIS "/interactive "
-```
+## Persistence
 
 ### T1546.008 Accessibility Features
 Atomics: [T1546.008](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.008/T1546.008.md)
@@ -18,7 +9,11 @@ Detections addition of a debugger process to executables using Image File Execut
 (RegistryKeyPath ContainsCIS "CurrentVersion\Image File Execution Options" AND RegistryKeyPath ContainsCIS ".exe\Debugger") AND (EventType = "Registry Value Create" OR EventType = "Registry Key Create")
 ```
 
-### T1546 Application Shimming
+### T1098 Account Manipulation
+Atomics: [T1098](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1098/T1098.md)
+
+
+### T1546.010 Application Shimming
 Atomics: [T1546.010](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.011/T1546.010.md) , 
 [T1546.011](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.011/T1546.011.md)
 
@@ -28,15 +23,22 @@ Detects application shimming through sdbinst or registry modification.
 (SrcProcName = "sdbinst.exe" and ProcessCmd ContainsCIS ".sdb") OR ((RegistryKeyPath ContainsCIS "AppInit_DLLs" OR RegistryPath  ContainsCIS "AppCompatFlags") AND (EventType = "Registry Value Create" OR EventType = "Registry Value Modified"))
 ```
 
-### T1548.002 Bypass User Access Control
-Atomics: [T1548.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1548.002/T1548.002.md)
+### T1053.002 AT Scheduled Task
+Atomics: [T1053.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1053.002/T1053.002.md)
 
-Detection of UAC bypass through tampering with Shell Open for .ms-settings or .msc file types.
-** Noted issues with Sentinel Agent 4.3.2.86 detecting by registry key. All registry key paths wer ControlSet001\Service\bam\State\UserSettings\GUID\... ***
+Detect interactive process execution scheduled by AT command.
 
 ```
-SrcProcCmdLine ContainsCIS "ms-settings\shell\open\command" OR SrcProcCmdLine ContainsCIS "mscfile\shell\open\command"
+TgtProcName = "at.exe" AND TgtProcCmdLine ContainsCIS "/interactive "
 ```
+
+### T1197 BITS Jobs
+Atomics: [T1197](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1197/T1197.md)
+
+
+### T1176 Browser Extensions
+Atomics: [T1176](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1176/T1176.md)
+
 
 ### T1574.012 COR Profiler
 Atomics: [T1574.012](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.012/T1574.012.md)
@@ -48,20 +50,8 @@ Detection of unmanaged COR profiler hooking of .NET CLR through registry or proc
 ```
 
 ### T1546.001 Change Default File Association
-Atomics: [1546.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.001/T1546.001.md)
+Atomics: [T1546.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.001/T1546.001.md)
 
-Detection of file association changes. Detection by registry is noisy due to problem filtering on registry root, so install/uninstall apps create noise.
-
-```
---- File assoc change by registry
-RegistryKeyPath In Contains Anycase ( "\shell\open\command" , "\shell\print\command" , "\shell\printto\command" ) AND EventType In ( "Registry Value Create" , "Registry Value Modified" )
-```
-
-Recommended (for now)
-```
---- File assoc change by assoc command
-TgtProcCmdLine ContainsCIS "assoc" and TgtProcCmdLine RegExp ".*=.*"
-```
 
 ###  T1574.001 DLL Search Order Hijacking
 Atomics: [T1574.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.001/T1574.001.md)
@@ -99,6 +89,10 @@ Detection of Image File Execution Options tampering for persistence through Regi
 RegistryKeyPath In Contains Anycase ("CurrentVersion\Image File Execution Options","CurrentVersion\SilentProcessExit") AND RegistryKeyPath In Contains Anycase ("GlobalFlag","ReportingMode","MonitorProcess")
 ```
 
+### T1136.001 Local Account
+Atomics: [T1136.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1136.001/T1136.001.md)
+
+
 ### T1037.001 Logon Scripts (Windows)
 Atomics: [T1037.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1037.001/T1037.001.md)
 
@@ -115,15 +109,6 @@ Detection of "helper" dlls with network command shell, through command arguments
 
 ```
 (TgtProcName = "netsh.exe" AND TgtProcCmdLine ContainsCIS "add helper") OR (RegistryPath ContainsCIS "SOFTWARE\Microsoft\NetSh" AND EventType = "Registry Value Create")
-```
-
-### T1134.004 Parent PID Spoofing
-Atomics: [T1134.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1134.004/T1134.004.md)
-
-Detects parent PID spoofing through Cross Process indicators (SrcProcParentName limits scope heavily) as well as detecting the use of PPID-Spoof powershell script through Command Scripts indicators. Update the `TgtProcName` list to filter noise.
-
-```
-(TgtProcRelation = "not_in_storyline" AND EventType = "Open Remote Process Handle" AND SrcProcParentName In Contains Anycase ("userinit.exe","powershell.exe","cmd.exe") AND TgtProcName != "sihost.exe" And TgtProcIntegrityLevel  != "LOW" AND TgtProcName Not In ("SystemSettings.exe")) OR (SrcProcCmdScript ContainsCIS "PPID-Spoof" AND SrcProcCmdScript ContainsCIS "hSpoofParent = [Kernel32]::OpenProcess")
 ```
 
 ### T1574.009 Unquoted Service Path for program.exe
@@ -144,26 +129,12 @@ Detects the addition of process execution strings (`TgtProcCmdLine In Contains A
 (SrcProcCmdScript ContainsCIS "Add-Content $profile -Value" AND SrcProcCmdScript ContainsCIS "Start-Process") OR (TgtProcCmdLine ContainsCIS "Add-Content $profile" AND TgtProcCmdLine In Contains Anycase ("Start-Process","& ","cmd.exe /c"))
 ```
 
-### T1055.012 Process Hollowing
-Atomics: [T1055.012](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1055.012/T1055.012.md)
+### T1547.001 Registry Run Keys / Startup Folder
+Atomics: [T1547.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md)
 
-Detect Process Hollowing using the Start-Hollow powershell script, through CommandLine and CommandScript indicators.
 
-The `IndicatorCategory = "Injection"` has a lot of noise, but in the future a combination of `EventType = "Duplicate Process Handle" AND TgtProcRelation = "storyline_child"` joined with some `ChildProcCount` or `CrossProcCount` > 0 may help filter the noise.
-
-```
---- Detect Start-Hollow.ps1 by command or content
-(SrcProcCmdScript ContainsCIS "Start-Hollow" AND SrcProcCmdScript ContainsCIS "[Hollow]::NtQueryInformationProcess") OR TgtProcCmdLine ContainsCIS "Start-Hollow"
-```
-
-### T1055 Process Injection
-Atomics: [T1055](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1055/T1055.md)
-
-Detects Process Injection through execution of MavInject, filtering out noisy/expected activity. `SrcProcParentName` filter narrows Cross Process items to HQ results.
-
-```
-(TgtProcName = "mavinject.exe" AND TgtProcCmdLine ContainsCIS "/injectrunning") AND (SrcProcName Not In ("AppVClient.exe") AND SrcProcParentName Not In ("smss.exe"))
-```
+### T1053.005 Scheduled Task
+Atomics: [T1053.005](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1053.005/T1053.005.md)
 
 
 ### T1546.002 Screensaver
@@ -184,6 +155,14 @@ Detection of changes to Security Support Provider through Registry modification.
 RegistryKeyPath ContainsCIS "\Control\Lsa\Security Packages" AND (SrcProcName Not In ("services.exe","SetupHost.exe","svchost.exe") AND SrcProcCmdLine Does Not ContainCIS "system32\wsauth.dll")
 ```
 
+### T1574.010 Services File Permissions Weakness
+Atomics: [T1574.010](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.010/T1574.010.md)
+
+
+### T1574.011 Services Registry Permissions Weakness
+Atomics: [T1574.011](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.011/T1574.011.md)
+
+
 ### T1547.009 Startup Shortcuts
 Atomics: [T1547.009](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.009/T1547.009.md)
 
@@ -192,6 +171,14 @@ Focuses on Test 2: Detection .lnk or .url files written to Startup folders. Filt
 ```
 (FileFullName ContainsCIS "Microsoft\Windows\Start Menu\Programs\Startup" AND TgtFileExtension In Contains ("lnk","url") AND EventType = "File Creation") AND SrcProcName Not In ("ONENOTE.EXE","msiexec.exe")
 ```
+
+### T1505.002 Transport Agent
+Atomics: [T1505.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1505.002/T1505.002.md)
+
+
+### T1505.003 Web Shell
+Atomics: [T1505.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1505.003/T1505.003.md)
+
 
 ### T1546.003 Windows Management Instrumentation Event Subscription
 Atomics: [T1546.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.003/T1546.003.md)
