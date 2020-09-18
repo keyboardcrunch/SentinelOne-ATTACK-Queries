@@ -49,6 +49,12 @@ Both Atomic tests for this technique leverage csc.exe for compilation of code. T
 ### T1218.001 Compiled HTML File
 Atomics: [T1218.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.001/T1218.001.md)
 
+Breaking down the below query, the first section will detect Atomic Test 1 where a malicious chm file spawns a process, whereas the second half of the query detects hh.exe loading a remote chm file.
+
+```
+(SrcProcName = "hh.exe" and EventType = "Open Remote Process Handle") OR (SrcProcName = "hh.exe" AND SrcProcCmdLine RegExp "https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
+```
+
 ### T1218.002 Control Panel
 Atomics: [T1218.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.002/T1218.002.md)
 
