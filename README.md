@@ -11,12 +11,12 @@ This project aims to document SentinelOne Deep Visibility queries for detecting 
 
 [Initial Access](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/InitialAccess.md)
 
+[Persistence](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Persistence.md)
+
 
 ## Tactics (IN PROGRESS)
 
 [Defense Evasion](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/DefenseEvasion.md)
-
-[Persistence](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Persistence.md)
 
 [Impact](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Impact.md)
 
