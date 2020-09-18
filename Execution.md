@@ -31,10 +31,22 @@ There aren't any combination of available indicator types to query to find malic
 ### T1059.001 PowerShell
 Atomics: [T1059.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.001/T1059.001.md)
 
+Most of the Atomic Tests in this case are detected by their download cradles with [T1566.001 Test 1](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/InitialAccess.md#t1566001-spearphishing-attachment) or `IndicatorName = "ObfuscatedPSCommand"`, if not other LOLBAS detection methods for later portion of command execution.
 
-### T1053.005 Scheduled Task
+### T1053.005 Scheduled Tasks
 Atomics: [T1053.005](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1053.005/T1053.005.md)
 
+Our goal with this query is to detect any schtasks /create command as well as any use of the New-ScheduledTask* cmdlets from powershell, and to prevent noise from services and updates we'll exclude a list of system "trusted" SrcProcParentName executables.
+
+```
+(( TgtProcName = "schtasks.exe" AND TgtProcCmdLine ContainsCIS "/create" ) OR ( SrcProcCmdLine ContainsCIS "New-ScheduledTask" OR SrcProcCmdScript  ContainsCIS "New-ScheduledTask" )) AND SrcProcParentName Not In ("services.exe","OfficeClickToRun.exe")
+```
+
+**Optionally, leveraging the ScheduleTaskRegister Indicator object:**
+
+```
+IndicatorName = "ScheduleTaskRegister" AND SrcProcParentName Not In ("Integrator.exe","OfficeClickToRun.exe","services.exe","OneDriveSetup.exe","Ccm32BitLauncher.exe","WmiPrvSE.exe")
+```
 
 ### T1569.002 Service Execution
 Atomics: [T1569.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1569.002/T1569.002.md)
@@ -51,4 +63,8 @@ Atomics: [T1059.003](https://github.com/redcanaryco/atomic-red-team/blob/master/
 ### T1047 Windows Management Instrumentation
 Atomics: [T1047](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1047/T1047.md)
 
+The tests for this atomic are limited to execution of the wmic executable, so the below query has been limited to wmic.exe, and focuses on discovery and execution commandlines.
 
+```
+( SrcProcName = "WMIC.exe" AND SrcProcCmdLine In Contains Anycase ("useraccount get","process get","qfe get","service where","process call","call create") ) AND SrcProcParentName Not In ("msiexec.exe")
+```
