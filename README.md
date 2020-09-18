@@ -16,7 +16,7 @@ This project aims to document SentinelOne Deep Visibility queries for detecting 
 
 [Defense Evasion](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/DefenseEvasion.md)
 
-[Persistence](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Persistence.exe)
+[Persistence](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Persistence.md)
 
 [Impact](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Impact.md)
 
