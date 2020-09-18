@@ -46,7 +46,7 @@ The below query will find and remote content downloads from DesktopImgDownldr or
 (( TgtProcName In Contains Anycase ("bitsadmin.exe","desktopimgdownldr.exe") AND ( TgtProcCmdLine RegExp "https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)" OR TgtProcCmdLine ContainsCIS "/setnotifycmdline " ) ) OR ( TgtProcName = "powershell.exe" AND TgtProcCmdLine ContainsCIS "Start-BitsTransfer" ) ) AND SrcProcParentName Not In ("services.exe","smss.exe","wininit.exe")
 ```
 
-### T1176 Browser Extensions
+### T1176 Browser Extension Installation
 Atomics: [T1176](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1176/T1176.md)
 
 This query takes a lazy approach to detecting the staging of xpi or crx extension packages for installation within Chrome and Firefox based browsers. Unsure how to filter our extension updates without excluding too much.
