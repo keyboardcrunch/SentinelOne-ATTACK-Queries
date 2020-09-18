@@ -214,14 +214,6 @@ Detection of changes to Security Support Provider through Registry modification.
 RegistryKeyPath ContainsCIS "\Control\Lsa\Security Packages" AND (SrcProcName Not In ("services.exe","SetupHost.exe","svchost.exe") AND SrcProcCmdLine Does Not ContainCIS "system32\wsauth.dll")
 ```
 
-### T1574.010 Services File Permissions Weakness
-Atomics: [T1574.010](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.010/T1574.010.md)
-
-
-### T1574.011 Services Registry Permissions Weakness
-Atomics: [T1574.011](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.011/T1574.011.md)
-
-
 ### T1547.009 Startup Shortcuts
 Atomics: [T1547.009](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.009/T1547.009.md)
 
