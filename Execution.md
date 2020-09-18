@@ -52,19 +52,23 @@ IndicatorName = "ScheduleTaskRegister" AND SrcProcParentName Not In ("Integrator
 Atomics: [T1569.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1569.002/T1569.002.md)
 
 
-### T1059.005 Visual Basic
-Atomics: [T1059.005](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.005/T1059.005.md)
-
-
 ### T1059.003 Windows Command Shell
 Atomics: [T1059.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.003/T1059.003.md)
 
-Atomic test cases here simulate execution of batch files, so we're querying for bat files executed where SrcProcParentName isn't an executable we want to filter.
+Atomic test cases here simulate execution of batch files, so we're querying for bat files executed from temp directories where SrcProcParentName isn't an executable we want to filter. You can recycle the T1569.005 query directly below as a different method of detecting cmd.exe execution of bat files.
 
 ```
 (SrcProcName = "cmd.exe" AND FileFullName ContainsCIS "\Temp" AND FileType = "bat") AND SrcProcParentName Not In ("msiexec.exe")
 ```
 
+### T1059.005 Visual Basic
+Atomics: [T1059.005](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.005/T1059.005.md)
+
+This Atomic is just execution of vbs files, but we'll narrow this down to execution of vbs files from any Temp\ directory to be more useful.
+
+```
+SrcProcName = "cscript.exe" AND SrcProcCmdLine RegExp "\bTemp\b.*\.(vbs)"
+```
 
 ### T1047 Windows Management Instrumentation
 Atomics: [T1047](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1047/T1047.md)
