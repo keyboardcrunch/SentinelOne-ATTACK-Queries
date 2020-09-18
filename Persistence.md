@@ -166,6 +166,7 @@ Detects the addition of process execution strings (`TgtProcCmdLine In Contains A
 Atomics: [T1547.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md)
 
 **Atomic Tests 1-3, Registry Run Keys**
+
 Here we're just focusing on the addition of registry keys to Run, RunOnce, RunOnceEx keys where Parent Process isn't "trusted".
 
 ```
@@ -173,6 +174,7 @@ Here we're just focusing on the addition of registry keys to Run, RunOnce, RunOn
 ```
 
 **Atomic Tests 4-6, Startup folder execution**
+
 With the query below we'll focus on catching any vbs, jse or bat files being written to any Programs\StartUp folder, be that ProgramData or AppData locations.
 
 ```
