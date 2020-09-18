@@ -12,6 +12,11 @@ Detections addition of a debugger process to executables using Image File Execut
 ### T1098 Account Manipulation
 Atomics: [T1098](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1098/T1098.md)
 
+Both Atomic tests for account manipulation rely on PowerShell AD module, so we can catch both with one query. We have the query encapsulated so that we can filter it at the end by Parent Process, as some Logon Scripts and Configuration Items (SCOM, SCCM) may also cause noise. You may want to additionally filter out certain SrcProcUser to reduce noise. What cannot be helped, CommandScript detection on import of Powershell AD cmdlets.
+
+```
+( SrcProcCmdLine In Contains Anycase ("New-ADUser","Rename-LocalUser","Set-LocalUser") OR SrcProcCmdScript In Contains Anycase ("New-ADUser","Rename-LocalUser","Set-LocalUser") OR SrcProcCmdLine RegExp "\bAdd-ADGroupMember\b.*\bDomain Admins\b" OR SrcProcCmdScript RegExp "\bAdd-ADGroupMember\b.*\bDomain Admins\b" ) AND SrcProcParentName Not In ("WmiPrvSE.exe","AppVClient.exe","svchost.exe","CompatTelRunner.exe")
+```
 
 ### T1546.010 Application Shimming
 Atomics: [T1546.010](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.011/T1546.010.md) , 
