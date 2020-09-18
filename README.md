@@ -13,6 +13,8 @@ This project aims to document SentinelOne Deep Visibility queries for detecting 
 
 [Persistence](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Persistence.md)
 
+[Execution](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Execution.md)
+
 
 ## Tactics (IN PROGRESS)
 
@@ -25,8 +27,6 @@ This project aims to document SentinelOne Deep Visibility queries for detecting 
 [Command and Control](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/CommandAndControl.md)
 
 [Collection](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Collection.md)
-
-[Execution](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Execution.md)
 
 [Exfiltration](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Exfiltration.md)
 
