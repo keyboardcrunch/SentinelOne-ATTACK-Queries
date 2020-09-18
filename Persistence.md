@@ -181,13 +181,19 @@ With the query below we'll focus on catching any vbs, jse or bat files being wri
 FileFullName ContainsCIS "Programs\Startup" AND FileType In Contains Anycase ("vbs","jse","bat") AND EventType = "File Creation"
 ```
 
-### T1053.005 Scheduled Task
+### T1053.005 Scheduled Tasks
 Atomics: [T1053.005](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1053.005/T1053.005.md)
 
 Our goal with this query is to detect any schtasks /create command as well as any use of the New-ScheduledTask* cmdlets from powershell, and to prevent noise from services and updates we'll exclude a list of system "trusted" SrcProcParentName executables.
 
 ```
 (( TgtProcName = "schtasks.exe" AND TgtProcCmdLine ContainsCIS "/create" ) OR ( SrcProcCmdLine ContainsCIS "New-ScheduledTask" OR SrcProcCmdScript  ContainsCIS "New-ScheduledTask" )) AND SrcProcParentName Not In ("services.exe","OfficeClickToRun.exe")
+```
+
+** Optionally, leveraging the ScheduleTaskRegister Indicator object: **
+
+```
+IndicatorName = "ScheduleTaskRegister" AND SrcProcParentName Not In ("Integrator.exe","OfficeClickToRun.exe","services.exe","OneDriveSetup.exe","Ccm32BitLauncher.exe","WmiPrvSE.exe")
 ```
 
 ### T1546.002 Screensaver
