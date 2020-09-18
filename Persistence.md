@@ -109,6 +109,12 @@ RegistryKeyPath In Contains Anycase ("CurrentVersion\Image File Execution Option
 ### T1136.001 Local Account
 Atomics: [T1136.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1136.001/T1136.001.md)
 
+In the query below we'll query all instances of local accounts being created for Windows, Linux, and OSX. Depending on your environment, you may find quite a bit of noise with the Linux useradd command.
+
+```
+SrcProcCmdLine In Contains Anycase ("net user /add","useradd","New-LocalUser") OR SrcProcCmdLine RegExp "\bdscl\b.*\b/\create\b" OR SrcProcCmdLine RegExp "\bnet localgroup administrators\b.*\b\/add\b"
+```
+
 
 ### T1037.001 Logon Scripts (Windows)
 Atomics: [T1037.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1037.001/T1037.001.md)
