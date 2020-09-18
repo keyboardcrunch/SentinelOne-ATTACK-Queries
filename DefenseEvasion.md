@@ -52,7 +52,7 @@ Atomics: [T1218.001](https://github.com/redcanaryco/atomic-red-team/blob/master/
 Breaking down the below query, the first section will detect Atomic Test 1 where a malicious chm file spawns a process, whereas the second half of the query detects hh.exe loading a remote payloads.
 
 ```
-(SrcProcName = "hh.exe" and EventType = "Open Remote Process Handle") OR (SrcProcName = "hh.exe" AND SrcProcCmdLine RegExp "https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
+(SrcProcName = "hh.exe" AND EventType = "Open Remote Process Handle") OR (SrcProcName = "hh.exe" AND SrcProcCmdLine RegExp "https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
 ```
 
 ### T1218.002 Control Panel
@@ -124,8 +124,20 @@ Atomics: [T1112](https://github.com/redcanaryco/atomic-red-team/blob/master/atom
 ### T1218.005 Mshta
 Atomics: [T1218.005](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.005/T1218.005.md)
 
+SentinelOne happens to be pretty good at detecting MSHTA attacks, and *IndicatorName = "SuspiciousScript"* specifically picks out these javascript based attacks very well. The below query will detect mshta.exe spawning processes as well as URLs for remote payloads to be loaded by mshta.
+
+```
+(SrcProcName = "mshta.exe" and EventType = "Open Remote Process Handle") OR (SrcProcName = "mshta.exe" AND SrcProcCmdLine RegExp "https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
+```
+
 ### T1218.007 Msiexec
 Atomics: [T1218.007](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.007/T1218.007.md)
+
+The below query will accurately detect execution of remote msi files by msiexec.exe. The second half of the query aims to detect processes spawned by msi files instead of dll files in the CommandLine (as that is very noisy) and may return a bit of noise within for the CrossProcess Object as some auto-update processes may be collected by this query.
+
+```
+( SrcProcName = "msiexec.exe" AND SrcProcCmdLine RegExp "https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)" ) OR (SrcProcName RegExp "^.*\.(tmp)" AND EventType = "Open Remote Process Handle" AND SrcProcParentName = "msiexec.exe")
+```
 
 ### T1564.004 NTFS File Attributes
 Atomics: [T1564.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1564.004/T1564.004.md)
