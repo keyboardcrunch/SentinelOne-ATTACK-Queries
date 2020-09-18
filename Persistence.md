@@ -50,8 +50,20 @@ Detection of unmanaged COR profiler hooking of .NET CLR through registry or proc
 ```
 
 ### T1546.001 Change Default File Association
-Atomics: [T1546.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.001/T1546.001.md)
+Atomics: [1546.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.001/T1546.001.md)
 
+Detection of file association changes. Detection by registry is noisy due to problem filtering on registry root, so install/uninstall apps create noise.
+
+```
+--- File assoc change by registry
+RegistryKeyPath In Contains Anycase ( "\shell\open\command" , "\shell\print\command" , "\shell\printto\command" ) AND EventType In ( "Registry Value Create" , "Registry Value Modified" )
+```
+
+Recommended (for now)
+```
+--- File assoc change by assoc command
+TgtProcCmdLine ContainsCIS "assoc" and TgtProcCmdLine RegExp ".*=.*"
+```
 
 ###  T1574.001 DLL Search Order Hijacking
 Atomics: [T1574.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.001/T1574.001.md)
