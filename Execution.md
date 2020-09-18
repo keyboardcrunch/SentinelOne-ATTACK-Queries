@@ -59,6 +59,12 @@ Atomics: [T1059.005](https://github.com/redcanaryco/atomic-red-team/blob/master/
 ### T1059.003 Windows Command Shell
 Atomics: [T1059.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.003/T1059.003.md)
 
+Atomic test cases here simulate execution of batch files, so we're querying for bat files executed where SrcProcParentName isn't an executable we want to filter.
+
+```
+(SrcProcName = "cmd.exe" AND FileFullName ContainsCIS "\Temp" AND FileType = "bat") AND SrcProcParentName Not In ("msiexec.exe")
+```
+
 
 ### T1047 Windows Management Instrumentation
 Atomics: [T1047](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1047/T1047.md)
