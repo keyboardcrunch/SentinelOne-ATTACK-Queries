@@ -190,7 +190,7 @@ Our goal with this query is to detect any schtasks /create command as well as an
 (( TgtProcName = "schtasks.exe" AND TgtProcCmdLine ContainsCIS "/create" ) OR ( SrcProcCmdLine ContainsCIS "New-ScheduledTask" OR SrcProcCmdScript  ContainsCIS "New-ScheduledTask" )) AND SrcProcParentName Not In ("services.exe","OfficeClickToRun.exe")
 ```
 
-** Optionally, leveraging the ScheduleTaskRegister Indicator object: **
+**Optionally, leveraging the ScheduleTaskRegister Indicator object:**
 
 ```
 IndicatorName = "ScheduleTaskRegister" AND SrcProcParentName Not In ("Integrator.exe","OfficeClickToRun.exe","services.exe","OneDriveSetup.exe","Ccm32BitLauncher.exe","WmiPrvSE.exe")
