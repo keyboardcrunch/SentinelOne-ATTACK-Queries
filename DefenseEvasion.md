@@ -40,16 +40,16 @@ Detects the clearing of EventLogs through wevtutil (concise) as well as Clear-Ev
 ### T1027.004 Compile After Delivery
 Atomics: [T1027.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1027.004/T1027.004.md)
 
-Both Atomic tests for this technique leverage csc.exe for compilation of code. The below will detect specific compilation of executables as well as dynamic compilation through detection of csc.exe creating executable files (both dll and exe).
+Both Atomic tests for this technique leverage csc.exe for compilation of code. The below will detect specific compilation of executables as well as dynamic compilation through detection of csc.exe creating executable files (both dll and exe). Filter noise from later portion of query using *SrcProcParentName Not In ()*.
 
 ```
-(TgtProcName = "csc.exe" AND SrcProcCmdLine Contains "/target:exe") OR (SrcProcName  = "csc.exe" AND TgtFileIsExecutable = "true" AND SrcProcParentName Not In ("svchost.exe","AbtSvcHost_.exe"))
+(TgtProcName = "csc.exe" AND SrcProcCmdLine Contains "/target:exe") OR (SrcProcName  = "csc.exe" AND TgtFileIsExecutable = "true" AND SrcProcParentName Not In ("svchost.exe"))
 ```
 
 ### T1218.001 Compiled HTML File
 Atomics: [T1218.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.001/T1218.001.md)
 
-Breaking down the below query, the first section will detect Atomic Test 1 where a malicious chm file spawns a process, whereas the second half of the query detects hh.exe loading a remote chm file.
+Breaking down the below query, the first section will detect Atomic Test 1 where a malicious chm file spawns a process, whereas the second half of the query detects hh.exe loading a remote payloads.
 
 ```
 (SrcProcName = "hh.exe" and EventType = "Open Remote Process Handle") OR (SrcProcName = "hh.exe" AND SrcProcCmdLine RegExp "https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
