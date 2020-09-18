@@ -51,6 +51,11 @@ IndicatorName = "ScheduleTaskRegister" AND SrcProcParentName Not In ("Integrator
 ### T1569.002 Service Execution
 Atomics: [T1569.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1569.002/T1569.002.md)
 
+The tests for this Atomic are lacking, so we'll go ahead and just detect sc.exe start or start-service. PSExec belongs in lateral movement detection, so I'll ignore Test 2.
+
+```
+(( SrcProcName = "sc.exe" AND SrcProcCmdLine ContainsCIS "create" ) OR SrcProcCmdLine ContainsCIS "Start-Service" ) AND SrcProcParentName != "services.exe"
+```
 
 ### T1059.003 Windows Command Shell
 Atomics: [T1059.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.003/T1059.003.md)
