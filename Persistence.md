@@ -234,6 +234,12 @@ Focuses on Test 2: Detection .lnk or .url files written to Startup folders. Filt
 ### T1505.002 Transport Agent
 Atomics: [T1505.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1505.002/T1505.002.md)
 
+Detection of Powershell TransportAgent Cmdlets being used to setup an Exchange Transport Agent.
+
+```
+SrcProcCmdLine In Contains Anycase ("Install-TransportAgent","Enable-TransportAgent","Get-TransportAgent") OR SrcProcCmdScript In Contains Anycase ("Install-TransportAgent","Enable-TransportAgent","Get-TransportAgent")
+```
+
 
 ### T1505.003 Web Shell
 Atomics: [T1505.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1505.003/T1505.003.md)
