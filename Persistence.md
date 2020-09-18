@@ -240,9 +240,14 @@ Detection of Powershell TransportAgent Cmdlets being used to setup an Exchange T
 SrcProcCmdLine In Contains Anycase ("Install-TransportAgent","Enable-TransportAgent","Get-TransportAgent") OR SrcProcCmdScript In Contains Anycase ("Install-TransportAgent","Enable-TransportAgent","Get-TransportAgent")
 ```
 
-
 ### T1505.003 Web Shell
 Atomics: [T1505.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1505.003/T1505.003.md)
+
+I wanted to get complicated and find any process pulling content from the internet before copying to inetpub but couldn't get that working, so we went generic with our detection and filtered out possibly trusted sources of noise.
+
+```
+EventType = "File Creation" AND FileFullName ContainsCIS "inetpub\wwwroot" AND TgtFileExtension In Contains Anycase ("jsp","aspx","php") AND SrcProcName Not In ("explorer.exe","msdeploy.exe")
+```
 
 
 ### T1546.003 Windows Management Instrumentation Event Subscription
