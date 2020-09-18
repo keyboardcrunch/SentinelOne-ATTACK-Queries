@@ -13,10 +13,10 @@ Detects enabling of Guest account, adding Guest account to groups, as well as ch
 Atomics: [T1566.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1566.001/T1566.001.md)
 
 #### Test 1:
-This test merely uses Powershell to download a maldoc, the below query will find powershell downloads using multiple cradle methods as documented here by [HarmJ0y](https://gist.github.com/HarmJ0y/bb48307ffa663256e239). The below query should only be used for hunting purposes and covers most unobfuscated powershell cradles.
+This test merely uses Powershell to download a maldoc, the below query will find CommandLine or CommandScript downloads using multiple cradle methods as documented here by [HarmJ0y](https://gist.github.com/HarmJ0y/bb48307ffa663256e239). The below query should only be used for hunting purposes and covers most unobfuscated powershell cradles.
 
 ```
-(SrcProcCmdLine In Contains Anycase ("Net.WebClient","(iwr","DownloadString(","WinHttp.WinHttpRequest","IEX (","InternetExplorer.Application","Msxml2.XMLHTTP") OR SrcProcCmdScript In Contains Anycase ("Net.WebClient","(iwr","DownloadString(","WinHttp.WinHttpRequest","IEX (","InternetExplorer.Application","Msxml2.XMLHTTP"))
+(SrcProcCmdLine In Contains Anycase ("Net.WebClient","(iwr","DownloadString(","WinHttp.WinHttpRequest","IEX (","InternetExplorer.Application","Msxml2.XMLHTTP","MSXML2.ServerXMLHTTP") OR SrcProcCmdScript In Contains Anycase ("Net.WebClient","(iwr","DownloadString(","WinHttp.WinHttpRequest","IEX (","InternetExplorer.Application","Msxml2.XMLHTTP","MSXML2.ServerXMLHTTP"))
 ```
 
 
