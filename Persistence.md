@@ -165,6 +165,19 @@ Detects the addition of process execution strings (`TgtProcCmdLine In Contains A
 ### T1547.001 Registry Run Keys / Startup Folder
 Atomics: [T1547.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md)
 
+**Atomic Tests 1-3, Registry Run Keys**
+Here we're just focusing on the addition of registry keys to Run, RunOnce, RunOnceEx keys where Parent Process isn't "trusted".
+
+```
+( RegistryKeyPath ContainsCIS "Windows\CurrentVersion\Run" AND EventType = "Registry Key Create" ) AND SrcProcParentName Not In ("smss.exe","svchost.exe","SetupHost.exe","OneDriveSetup.exe","WindowsUpdateBox.exe")
+```
+
+**Atomic Tests 4-6, Startup folder execution**
+With the query below we'll focus on catching any vbs, jse or bat files being written to any Programs\StartUp folder, be that ProgramData or AppData locations.
+
+```
+FileFullName ContainsCIS "Programs\Startup" AND FileType In Contains Anycase ("vbs","jse","bat") AND EventType = "File Creation"
+```
 
 ### T1053.005 Scheduled Task
 Atomics: [T1053.005](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1053.005/T1053.005.md)
