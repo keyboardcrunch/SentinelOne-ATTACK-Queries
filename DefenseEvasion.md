@@ -31,6 +31,12 @@ Detection of unmanaged COR profiler hooking of .NET CLR through registry or proc
 ### T1070.001 Clear Windows Event Logs
 Atomics: [T1070.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1070.001/T1070.001.md)
 
+Detects the clearing of EventLogs through wevtutil (concise) as well as Clear-EventLog through CommandLine and CommandScript objects. Powershell cmdlet detection returns a lot of noise for the CommandScripts object, so filtering out *SrcProcParentName* may be required.
+
+```
+(TgtProcName  = "wevtutil.exe" AND TgtProcCmdLine ContainsCIS "cl ") OR ((SrcProcCmdLine ContainsCIS "Clear-EventLog" OR SrcProcCmdScript ContainsCIS "Clear-EventLog") AND SrcProcParentName Not In ("WmiPrvSE.exe","PFERemediation.exe","svchost.exe"))
+```
+
 ### T1027.004 Compile After Delivery
 Atomics: [T1027.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1027.004/T1027.004.md)
 
