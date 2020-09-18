@@ -49,6 +49,11 @@ The below query will find and remote content downloads from DesktopImgDownldr or
 ### T1176 Browser Extensions
 Atomics: [T1176](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1176/T1176.md)
 
+This query takes a lazy approach to detecting the staging of xpi or crx extension packages for installation within Chrome and Firefox based browsers. Unsure how to filter our extension updates without excluding too much.
+
+```
+( FileFullName RegExp "\bWebstore Downloads\b.*\.(crx)$" OR FileFullName RegExp "\bstaged\b.*\.(xpi)$" ) AND EventType = "File Creation"
+```
 
 ### T1574.012 COR Profiler
 Atomics: [T1574.012](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.012/T1574.012.md)
