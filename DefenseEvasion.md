@@ -34,6 +34,10 @@ Atomics: [T1070.001](https://github.com/redcanaryco/atomic-red-team/blob/master/
 ### T1027.004 Compile After Delivery
 Atomics: [T1027.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1027.004/T1027.004.md)
 
+```
+(TgtProcName = "csc.exe" AND SrcProcCmdLine Contains "/target:exe") OR (SrcProcName  = "csc.exe" AND TgtFileIsExecutable = "true" AND SrcProcParentName Not In ("svchost.exe","AbtSvcHost_.exe"))
+```
+
 ### T1218.001 Compiled HTML File
 Atomics: [T1218.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.001/T1218.001.md)
 
