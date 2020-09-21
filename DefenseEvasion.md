@@ -116,6 +116,12 @@ Detects enabling of Guest account, adding Guest account to groups, as well as ch
 ### T1140 Deobfuscate/Decode Files or Information
 Atomics: [T1140](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1140/T1140.md)
 
+This Atomic tests detections of certutil encoding and decoding of executables, and the replication of certutil for bypassing detection of executable encoding. Our query below will detected renamed certutil through matching of DisplayName, as well as encoding or decoding of exe files.
+
+```
+(TgtProcName != "certutil.exe" AND TgtProcDisplayName = "CertUtil.exe") OR ( TgtProcDisplayName = "CertUtil.exe" AND (TgtProcCmdLine RegExp "^.*(-decode).*\.(exe)" OR TgtProcCmdLine RegExp "^.*(-encode).*\.(exe)") )
+```
+
 ### T1562.002 Disable Windows Event Logging
 Atomics: [T1562.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.002/T1562.002.md)
 
