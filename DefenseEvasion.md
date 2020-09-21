@@ -125,6 +125,20 @@ This Atomic tests detections of certutil encoding and decoding of executables, a
 ### T1562.002 Disable Windows Event Logging
 Atomics: [T1562.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.002/T1562.002.md)
 
+#### Atomic #1 - Disable IIS Logging
+
+```
+TgtProcName = "appcmd.exe" AND TgtProcCmdLine ContainsCIS "/dontLog:true" AND TgtProcCmdLine ContainsCIS "/section:httplogging"
+```
+
+#### Atomic #2 - Kill Eventlog Service Threads
+
+Detection is specific to Invoke-Phant0m strings as the test uses it, and we're hoping to catch renamed and obfuscated versions by catching the TerminateThread call.
+
+```
+SrcProcCmdLine ContainsCIS "Invoke-Phant0m" OR SrcProcCmdScript ContainsCIS "$Kernel32::TerminateThread($getThread" OR SrcProcCmdScript ContainsCIS "Invoke-Phant0m"
+```
+
 ### T1562.004 Disable or Modify System Firewall
 Atomics: [T1562.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.004/T1562.004.md)
 
