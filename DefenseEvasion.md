@@ -29,6 +29,12 @@ SrcProcCmdLine ContainsCIS "ms-settings\shell\open\command" OR SrcProcCmdLine Co
 ### T1218.003 CMSTP
 Atomics: [T1218.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.003/T1218.003.md)
 
+CMSTP is rarely used within my environment, so the below detection has low false positives without filtering, though you may want to limit query to inf files located in personal/writeable directories.
+
+```
+SrcProcName = "cmstp.exe" AND SrcProcCmdLine RegExp "^.*\.(inf)"
+```
+
 ### T1574.012 COR_PROFILER
 Atomics: [T1574.012](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.012/T1574.012.md)
 
