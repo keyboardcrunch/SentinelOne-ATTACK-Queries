@@ -175,6 +175,36 @@ TgtProcName = "netsh.exe" AND TgtProcCmdLine ContainsCIS "add rule" AND TgtProcC
 ### T1562.001 Disable or Modify Tools
 Atomics: [T1562.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md)
 
+#### Atomic #1 - Disable Syslog
+
+```
+TgtProcName In Contains ("service","chkconfig","systemctl") AND TgtProcCmdLine In Contains ("rsyslog stop","off rsyslog","stop rsyslog","disable rsyslog")
+```
+
+#### Atomic #9 AND #10 - Disable Sysmon 
+
+```
+(TgtProcName = "fltmc.exe" AND TgtProcCmdLine ContainsCIS "unload SysmonDrv") OR (TgtProcName = "sysmon.exe" AND TgtProcCmdLine ContainsCIS "-u")
+```
+
+#### Atomic #11 - AMSI Bypass - AMSI InitFailed
+
+```
+TgtProcCmdLine ContainsCIS "[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$true)" OR SrcProcCmdScript ContainsCIS "[Ref].Assembly.GetType('System.Management.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$true)"
+```
+
+#### Atomic #12 - AMSI Bypass - Remove AMSI Provider Reg Key
+
+```
+RegistryPath ContainsCIS "\Microsoft\AMSI\Providers" AND EventType In ("Registry Key Delete","Registry Value Delete")
+```
+
+#### Atomic #17 - Disable Microsoft Office Security Features
+
+```
+(RegistryKeyPath ContainsCIS "Excel\Security" OR RegistryKeyPath ContainsCIS "Excel\Security\ProtectedView") AND RegistryKeyPath In Contains Anycase ("VBAWarnings","DisableInternetFilesInPV","DisableUnsafeLocationsInPV","DisableAttachementsInPV") AND EventType In ("Registry Value Create","Registry Value Modified")
+```
+
 ### T1564.001 Hidden Files and Directories
 Atomics: [T1564.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1564.001/T1564.001.md)
 
