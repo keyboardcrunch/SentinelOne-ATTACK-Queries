@@ -74,13 +74,13 @@ Breaking down the below query, the first section will detect Atomic Test 1 where
 ### T1218.002 Control Panel
 Atomics: [T1218.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.002/T1218.002.md)
 
-The below query will find all cpl files outside standard directories and all cpl files executed outside of Windows directories.
+The below query will find all cpl files outside standard directories and all cpl files executed outside of Windows directories. First portion of query may need to be dropped if there's too much noise in your environment.
 
 ```
 (TgtFileExtension = "cpl" AND TgtFilePath Does Not ContainCIS "C:\Windows" AND TgtFilePath Does Not ContainCIS "C:\Program Files" AND TgtFilePath Does Not ContainCIS "C:\$WINDOWS.~BT") OR (SrcProcName = "control.exe" AND SrcProcCmdLine ContainsCIS ".cpl" AND SrcProcCmdLine Does Not ContainCIS "C:\Windows")
 ```
 
-In the future, when **Cross Process Open Process Count** is working, it may be more accurate to detect execution of cpl files where EventType **Open Remote Process Handle** exists, though that can be added to above for filtering but would exclude Process type data.
+In the future, when Process type counts are working, it may be more accurate to detect execution of cpl files where EventType **Open Remote Process Handle** or **Duplicate Process Handle** exists, though that can be added to above for filtering but would exclude Process type data.
 
 ```
 SrcProcName = "rundll32.exe" AND SrcProcCmdLine ContainsCIS "Shell32.dll,Control_RunDLL" AND CrossProcOpenProcCount > 0
