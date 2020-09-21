@@ -142,6 +142,36 @@ SrcProcCmdLine ContainsCIS "Invoke-Phant0m" OR SrcProcCmdScript ContainsCIS "$Ke
 ### T1562.004 Disable or Modify System Firewall
 Atomics: [T1562.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.004/T1562.004.md)
 
+#### Atomic #1 - Linux
+
+```
+(SrcProcName In Contains ("service","chkconfig") AND SrcProcCmdLine In Contains ("off","stop") AND SrcProcCmdLine ContainsCIS "tables") OR (TgtProcName = "systemctl" AND TgtProcCmdLine In Contains ("stop","disable") AND TgtProcCmdLine Contains "firewalld")
+```
+
+#### Atomic #2 - Disable Defender Firewall
+
+```
+TgtProcName = "netsh.exe" AND TgtProcCmdLine ContainsCIS "state off"
+```
+
+#### Atomic #3 - Allow SMB and RDP on Defender Firewall
+
+```
+(TgtProcName = "netsh.exe" AND TgtProcCmdLine ContainsCIS "remote desktop" AND TgtProcCmdLine ContainsCIS "enable=Yes") OR (TgtProcName = "netsh.exe" AND TgtProcCmdLine ContainsCIS "file and printer sharing" AND TgtProcCmdLine ContainsCIS "enable=Yes")
+```
+
+#### Atomic #4 AND #5 - Open Local Port on Defender Firewall
+
+```
+TgtProcName = "netsh.exe" AND TgtProcCmdLine ContainsCIS "add rule" AND TgtProcCmdLine ContainsCIS "dir=in" AND TgtProcCmdLine ContainsCIS "localport="
+```
+
+#### Atomic #6 - Allow Executable Through Defender Firewall
+
+```
+TgtProcName = "netsh.exe" AND TgtProcCmdLine ContainsCIS "add rule" AND TgtProcCmdLine ContainsCIS "program=" AND TgtProcCmdLine In Contains Anycase ("C:\Users","C:\Windows\Temp")
+```
+
 ### T1562.001 Disable or Modify Tools
 Atomics: [T1562.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md)
 
