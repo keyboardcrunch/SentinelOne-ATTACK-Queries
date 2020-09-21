@@ -3,6 +3,10 @@
 ### T1055.004 Asynchronous Procedure Call
 Atomics: [T1055.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1055.004/T1055.004.md)
 
+SentinelOne isn't great at detecting all 5 injection methods, only 1 indicator of **RemoteInjection** is caught (Agent v. 4.3.2.86, Liberty SP2). In the future you could probably look for unsigned processes with some sort of combination of Cross Process event types > ##.
+
+Reviewing process execution data for T1055.exe, I noted 4 child calc.exe processes and 2 notepad.exe child processes with their own calc.exe children; both notepad.exe instances had 2 **Process** events despite only having one child (most with CrossProcess entreis in_storyline but only 1 storyline_child).
+
 ### T1197 BITS Jobs
 Atomics: [T1197](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1197/T1197.md)
 
