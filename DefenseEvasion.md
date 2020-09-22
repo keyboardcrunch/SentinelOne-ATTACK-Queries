@@ -26,6 +26,12 @@ Detection of UAC bypass through tampering with Shell Open for .ms-settings or .m
 SrcProcCmdLine ContainsCIS "ms-settings\shell\open\command" OR SrcProcCmdLine ContainsCIS "mscfile\shell\open\command"
 ```
 
+To further UAC bypass detection, the below query will detect CMSTPLUA COM interface abuse by GUID and can be combined with the above. See [Security-in-bits](https://www.securityinbits.com/malware-analysis/uac-bypass-analysis-stage-1-ataware-ransomware-part-2/#footnote) for more.
+
+```
+TgtProcDisplayName = "COM Surrogate" AND TgtProcCmdLine ContainsCIS "{3E5FC7F9-9A51-4367-9063-A120244FBEC7}"
+```
+
 ### T1218.003 CMSTP
 Atomics: [T1218.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.003/T1218.003.md)
 
