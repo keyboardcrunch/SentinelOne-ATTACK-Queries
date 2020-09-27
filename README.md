@@ -17,12 +17,13 @@ This project aims to document SentinelOne Deep Visibility queries for detecting 
 
 [Lateral Movement](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/LateralMovement.md)
 
+[Impact](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/Impact.md)
+
+
 
 ## Tactics (IN PROGRESS)
 
 [Defense Evasion](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/DefenseEvasion.md)
-
-[Impact](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/Impact.md)
 
 [Discovery](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/Discovery.md)
 
