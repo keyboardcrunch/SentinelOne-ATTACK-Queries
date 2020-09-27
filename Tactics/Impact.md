@@ -27,6 +27,13 @@ Detects the use of vssadmin, wbadmin, bcdedit and powershell deletion of shadowc
 TgtProcCmdLine In Contains Anycase ("delete shadows","shadowcopy delete","delete catalog","recoveryenabled no") OR (TgtProcCmdLine ContainsCIS "Win32_ShadowCopy" AND TgtProcCmdLine ContainsCIS "Delete()") OR (SrcProcCmdScript ContainsCIS "Win32_ShadowCopy" AND SrcProcCmdScript ContainsCIS "Delete()")
 ```
 
-### T1489 Service Stop
+### T1489 Service Disable
 Atomics: [T1489](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1489/T1489.md)
 
+Stopping services is too common, so we're instead detecting the disabling of services through sc.exe, wmic, and powershell Set-Service cmdlet. 
+
+*Atomic tests don't align with detection query*
+
+```
+(TgtProcName = "WMIC.exe" AND TgtProcCmdLine ContainsCIS "call ChangeStartmode Disabled") OR (TgtProcName = "sc.exe" AND TgtProcCmdLine ContainsCIS "disabled") OR (TgtProcCmdLine ContainsCIS "Set-Service" AND TgtProcCmdLine ContainsCIS "-StartupType Disabled")
+```
