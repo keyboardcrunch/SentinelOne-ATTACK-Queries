@@ -15,6 +15,8 @@ This project aims to document SentinelOne Deep Visibility queries for detecting 
 
 [Execution](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Execution.md)
 
+[Lateral Movement](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/LateralMovement.md)
+
 
 ## Tactics (IN PROGRESS)
 
@@ -31,5 +33,3 @@ This project aims to document SentinelOne Deep Visibility queries for detecting 
 [Exfiltration](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Exfiltration.md)
 
 [Credential Access](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/CredentialAccess.md)
-
-[Lateral Movement](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/LateralMovement.md)
