@@ -12,6 +12,11 @@ SrcProcCmdline RegExp "net\s+user(?:(?!\s+/delete)(?:.|\n))*\s+/delete" OR TgtPr
 ### T1485 Data Destruction
 Atomics: [T1485](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1485/T1485.md)
 
+Detection of SDelete (by display name) and execution of DD command on *nix operating systems.
+
+```
+(AgentOS In ("linux","osx") AND TgtProcName = "dd") OR TgtProcDisplayName = "Secure file delete"
+```
 
 ### T1490 Inhibit System Recovery
 Atomics: [T1490](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1490/T1490.md)
