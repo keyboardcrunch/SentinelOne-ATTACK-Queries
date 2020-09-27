@@ -26,12 +26,12 @@ The tests for this technique overlap heavily with [T1566.001 Spearphishing Attac
 ### T1106 Native API
 Atomics: [T1106](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1106/T1106.md)
 
-There aren't any combination of available indicator types to query to find malicious uses of WinAPI for process execution, though this test can be detected through [T1027.004 Compile After Delivery](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/DefenseEvasion.md#t1027004-compile-after-delivery)
+There aren't any combination of available indicator types to query to find malicious uses of WinAPI for process execution, though this test can be detected through [T1027.004 Compile After Delivery](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/DefenseEvasion.md#t1027004-compile-after-delivery)
 
 ### T1059.001 PowerShell
 Atomics: [T1059.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.001/T1059.001.md)
 
-Most of the Atomic Tests in this case are detected by their download cradles with [T1566.001 Test 1](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/InitialAccess.md#t1566001-spearphishing-attachment) or `IndicatorName = "ObfuscatedPSCommand"`, if not other LOLBAS detection methods for later portion of command execution.
+Most of the Atomic Tests in this case are detected by their download cradles with [T1566.001 Test 1](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/InitialAccess.md#t1566001-spearphishing-attachment) or `IndicatorName = "ObfuscatedPSCommand"`, if not other LOLBAS detection methods for later portion of command execution.
 
 ### T1053.005 Scheduled Tasks
 Atomics: [T1053.005](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1053.005/T1053.005.md)
