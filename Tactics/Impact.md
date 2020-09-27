@@ -30,8 +30,3 @@ TgtProcCmdLine In Contains Anycase ("delete shadows","shadowcopy delete","delete
 ### T1489 Service Stop
 Atomics: [T1489](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1489/T1489.md)
 
-
-### T1529 System Shutdown/Reboot
-Atomics: [T1529](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1529/T1529.md)
-
-
