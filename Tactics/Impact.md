@@ -3,6 +3,11 @@
 ### T1531 Account Access Removal
 Atomics: [T1531](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1531/T1531.md)
 
+Detects the deletion of a local user account or removal of Active Directory groups through powershell cmdlets. No detection for account password resets for purpose of impact due to false detections.
+
+```
+SrcProcCmdline RegExp "net\s+user(?:(?!\s+/delete)(?:.|\n))*\s+/delete" OR TgtProcCmdLine  ContainsCIS "Remove-ADGroupMember" OR SrcProcCmdScript ContainsCIS "Remove-ADGroupMember"
+```
 
 ### T1485 Data Destruction
 Atomics: [T1485](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1485/T1485.md)
