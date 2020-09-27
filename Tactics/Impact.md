@@ -15,7 +15,7 @@ Atomics: [T1485](https://github.com/redcanaryco/atomic-red-team/blob/master/atom
 Detection of SDelete (by display name) and execution of DD command on *nix operating systems.
 
 ```
-(AgentOS In ("linux","osx") AND TgtProcName = "dd") OR TgtProcDisplayName = "Secure file delete"
+(AgentOS In ("linux","osx") AND TgtProcName = "dd" AND TgtProcCmdLine ContainsCIS "of=") OR TgtProcDisplayName = "Secure file delete"
 ```
 
 ### T1490 Inhibit System Recovery
