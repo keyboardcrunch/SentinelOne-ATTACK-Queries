@@ -19,6 +19,7 @@ This project aims to document SentinelOne Deep Visibility queries for detecting 
 
 [Impact](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/Impact.md)
 
+[Exfiltration](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/Exfiltration.md)
 
 
 ## Tactics (IN PROGRESS)
@@ -30,7 +31,5 @@ This project aims to document SentinelOne Deep Visibility queries for detecting 
 [Command and Control](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/CommandAndControl.md)
 
 [Collection](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/Collection.md)
-
-[Exfiltration](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/Exfiltration.md)
 
 [Credential Access](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/master/Tactics/CredentialAccess.md)
