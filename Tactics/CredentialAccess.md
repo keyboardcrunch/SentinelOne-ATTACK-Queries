@@ -83,6 +83,11 @@ TgtProcCmdLine ContainsCIS "save HKLM\security\policy\secrets"
 ### T1003.001 LSASS Memory
 Atomics: [T1003.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1003.001/T1003.001.md)
 
+This one may look crazy but it's not. Detection of wce by hash, procdump, comsvc, dumpert, mimikatz, pypykatz, and werfault all in one query. 
+
+`
+TgtProcImageSha1 = "f0c52cea19c204f5cdbe952cc7cfc182e20d8d43" OR TgtProcCmdline ContainsCIS "-ma lsass.exe" OR TgtProcCmdline ContainsCIS "comsvcs.dll, MiniDump" OR TgtFilePath = "C:\Windows\Temp\dumpert.dmp" OR TgtFilePath RegExp "^.*lsass.*.DMP" OR (SrcProcCmdline ContainsCIS "sekurlsa::minidump" OR SrcProcCmdline ContainsCIS "sekurlsa::logonpasswords") OR SrcProcCmdline ContainsCIS "live lsa"
+`
 
 ### T1003.003 NTDS
 Atomics: [T1003.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1003.003/T1003.003.md)
