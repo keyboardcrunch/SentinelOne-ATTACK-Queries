@@ -43,6 +43,11 @@ TgtProcCmdline ContainsCIS "query HKLM /f password /t REG_SZ /s" OR TgtProcCmdli
 ### T1056.002 GUI Input Capture
 Atomics: [T1056.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1056.002/T1056.002.md)
 
+Focusing here on detecting the Powershell UI.PromptForCredential and GetNetworkCredential().Password in CmdScript or CmdLine.
+
+`
+(TgtProcCmdline ContainsCIS ".UI.PromptForCredential(" AND TgtProcCmdline ContainsCIS  ".GetNetworkCredential().Password") OR (SrcProcCmdScript ContainsCIS ".UI.PromptForCredential(" AND SrcProcCmdScript ContainsCIS  ".GetNetworkCredential().Password")
+`
 
 ### T1552.006 Group Policy Preferences
 Atomics: [T1552.006](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1552.006/T1552.006.md)
