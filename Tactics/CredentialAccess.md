@@ -34,6 +34,11 @@ TgtProcName = "accesschk.exe" AND TgtProcDisplayName != "Reports effective permi
 ### T1552.002 Credentials in Registry
 Atomics: [T1552.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1552.002/T1552.002.md)
 
+This query detects enumeration and discovery of credentials within the Registry, including Putty sessions.
+
+`
+TgtProcCmdline ContainsCIS "query HKLM /f password /t REG_SZ /s" OR TgtProcCmdline ContainsCIS "query HKCU /f password /t REG_SZ /s" OR TgtProcCmdline ContainsCIS "query HKCU\Software\SimonTatham\PuTTY\Sessions /t REG_SZ /s"
+`
 
 ### T1056.002 GUI Input Capture
 Atomics: [T1056.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1056.002/T1056.002.md)
