@@ -65,6 +65,11 @@ Atomics: [T1558.003](https://github.com/redcanaryco/atomic-red-team/blob/master/
 ### T1056.001 Keylogging
 Atomics: [T1056.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1056.001/T1056.001.md)
 
+I wasn't able to get either copy of the Get-Keystrokes.ps1 to work with powershell, but the below should reliably detect invocation by alias or CmdScript line matching.
+
+`
+TgtProcCmdline ContainsCIS "Get-Keystrokes" OR SrcProcCmdScript ContainsCIS "user32.dll GetAsyncKeyState" OR SrcProcCmdScript ContainsCIS "[Windows.Forms.Keys][Runtime.InteropServices.Marshal]::ReadInt32("
+`
 
 ### T1003.004 LSA Secrets
 Atomics: [T1003.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1003.004/T1003.004.md)
