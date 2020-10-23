@@ -56,7 +56,9 @@ Detection focuses on sysvol GP Policy xml file enumeration, with findstr or Get-
 
 `
 TgtProcCmdline RegExp "^.*\/S cpassword.*\\sysvol\\.*.xml" OR
+
 TgtProcCmdline ContainsCIS "Get-GPPPassword" OR
+
 SrcProcCmdScript ContainsCIS "Get-ChildItem -Path \"\\$Server\SYSVOL\" -Recurse -ErrorAction SilentlyContinue -Include 'Groups.xml','Services.xml','Scheduledtasks.xml','DataSources.xml','Printers.xml','Drives.xml'"
 `
 
