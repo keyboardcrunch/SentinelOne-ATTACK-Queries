@@ -8,6 +8,16 @@ Atomics: [T1056.004](https://github.com/redcanaryco/atomic-red-team/blob/master/
 ### T1552.001 Credentials In Files
 Atomics: [T1552.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1552.001/T1552.001.md)
 
+#### Test #1 - LaZagne
+LaZagne happens to spawn 3 cmd shells to save security, system and sam RegKeys, and the standard compiled release from github will have the original name artifact of lazagne.exe.manifest within the %temp%\_MEI?????\lazagne.exe.manifest location.
+`
+TgtProcCmdline Contains "reg.exe save hklm\s" OR TgtFilePath Contains "lazagne.exe.manifest"
+`
+
+#### Test #3 - findstr password extraction
+`
+TgtProcCmdLine ContainsCIS "/si pass" OR TgtProcCmdLine ContainsCIS "-pattern password"
+`
 
 ### T1555.003 Credentials from Web Browsers
 Atomics: [T1555.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1555.003/T1555.003.md)
