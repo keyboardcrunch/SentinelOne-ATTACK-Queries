@@ -80,7 +80,7 @@ For simplicity, we're detecting a Cmdline used for both psexec (the test) as wel
 TgtProcCmdLine ContainsCIS "save HKLM\security\policy\secrets"
 `
 
-### T1003.001 LSASS Memory
+### T1003.001 LSASS Memory Dumping
 Atomics: [T1003.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1003.001/T1003.001.md)
 
 This one may look crazy but it's not. Detection of wce by hash, procdump, comsvc, dumpert, mimikatz, pypykatz, and werfault all in one query. 
