@@ -52,6 +52,13 @@ Focusing here on detecting the Powershell UI.PromptForCredential and GetNetworkC
 ### T1552.006 Group Policy Preferences
 Atomics: [T1552.006](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1552.006/T1552.006.md)
 
+Detection focuses on sysvol GP Policy xml file enumeration, with findstr or Get-GPPPassword (Alias or CmdScript internal match).
+
+`
+TgtProcCmdline RegExp "^.*\/S cpassword.*\\sysvol\\.*.xml" OR
+TgtProcCmdline ContainsCIS "Get-GPPPassword" OR
+SrcProcCmdScript ContainsCIS "Get-ChildItem -Path \"\\$Server\SYSVOL\" -Recurse -ErrorAction SilentlyContinue -Include 'Groups.xml','Services.xml','Scheduledtasks.xml','DataSources.xml','Printers.xml','Drives.xml'"
+`
 
 ### T1558.003 Kerberoasting
 Atomics: [T1558.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1558.003/T1558.003.md)
