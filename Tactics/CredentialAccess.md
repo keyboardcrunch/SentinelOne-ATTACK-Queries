@@ -23,6 +23,13 @@ TgtProcCmdLine ContainsCIS "/si pass" OR TgtProcCmdLine ContainsCIS "-pattern pa
 ### T1555.003 Credentials from Web Browsers
 Atomics: [T1555.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1555.003/T1555.003.md)
 
+#### Test #1 - Modified SysInternals AccessChk Chrome password collector
+
+To focus on detection, we're looking for AccessChk.exe where the DisplayName does not match that of the original. There's 4X as many Cross_Process objects with this query but none detect the collection of the Chrome password db.
+
+`
+TgtProcName = "accesschk.exe" AND TgtProcDisplayName != "Reports effective permissions for securable objects"
+`
 
 ### T1552.002 Credentials in Registry
 Atomics: [T1552.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1552.002/T1552.002.md)
