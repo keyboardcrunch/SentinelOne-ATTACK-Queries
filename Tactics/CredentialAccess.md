@@ -74,6 +74,11 @@ TgtProcCmdline ContainsCIS "Get-Keystrokes" OR SrcProcCmdScript ContainsCIS "use
 ### T1003.004 LSA Secrets
 Atomics: [T1003.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1003.004/T1003.004.md)
 
+For simplicity, we're detecting a Cmdline used for both psexec (the test) as well as direct reg.exe LSA extraction.
+
+`
+TgtProcCmdLine ContainsCIS "save HKLM\security\policy\secrets"
+`
 
 ### T1003.001 LSASS Memory
 Atomics: [T1003.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1003.001/T1003.001.md)
