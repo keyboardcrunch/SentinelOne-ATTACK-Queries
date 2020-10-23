@@ -62,7 +62,7 @@ TgtProcCmdline RegExp "^.*\/S cpassword.*\\sysvol\\.*.xml" OR TgtProcCmdline Con
 Atomics: [T1558.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1558.003/T1558.003.md)
 
 
-### T1056.001 Keylogging
+### T1056.001 Powershell Keylogging
 Atomics: [T1056.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1056.001/T1056.001.md)
 
 I wasn't able to get either copy of the Get-Keystrokes.ps1 to work with powershell, but the below should reliably detect invocation by alias or CmdScript line matching.
