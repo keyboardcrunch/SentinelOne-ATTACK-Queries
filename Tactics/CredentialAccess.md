@@ -31,7 +31,7 @@ To focus on detection, we're looking for AccessChk.exe where the DisplayName doe
 TgtProcName = "accesschk.exe" AND TgtProcDisplayName != "Reports effective permissions for securable objects"
 `
 
-### T1552.002 Credentials in Registry
+### T1552.002 Registry Credential Enumeration
 Atomics: [T1552.002](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1552.002/T1552.002.md)
 
 This query detects enumeration and discovery of credentials within the Registry, including Putty sessions.
