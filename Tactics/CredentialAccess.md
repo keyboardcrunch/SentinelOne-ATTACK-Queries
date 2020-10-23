@@ -4,6 +4,7 @@
 ### T1056.004 Credential API Hooking
 Atomics: [T1056.004](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1056.004/T1056.004.md)
 
+The weight of this test relies on injecting a dll with mavinject that hooks into powershell to do the TLS decryption, our detection for [T1055 Mavinject](https://github.com/keyboardcrunch/SentinelOne-ATTACK-Queries/blob/9da3392c991c2badcb88a715e791a55654c1c567/Tactics/DefenseEvasion.md#t1055-process-injection) would cover us for these tests.
 
 ### T1552.001 Credentials In Files
 Atomics: [T1552.001](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1552.001/T1552.001.md)
