@@ -89,9 +89,14 @@ This one may look crazy but it's not. Detection of wce by hash, procdump, comsvc
 TgtProcImageSha1 = "f0c52cea19c204f5cdbe952cc7cfc182e20d8d43" OR TgtProcCmdline ContainsCIS "-ma lsass.exe" OR TgtProcCmdline ContainsCIS "comsvcs.dll, MiniDump" OR TgtFilePath = "C:\Windows\Temp\dumpert.dmp" OR TgtFilePath RegExp "^.*lsass.*.DMP" OR (SrcProcCmdline ContainsCIS "sekurlsa::minidump" OR SrcProcCmdline ContainsCIS "sekurlsa::logonpasswords") OR SrcProcCmdline ContainsCIS "live lsa"
 `
 
-### T1003.003 NTDS
+### T1003.003 NTDS Copy
 Atomics: [T1003.003](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1003.003/T1003.003.md)
 
+We won't bother detecting VSS copies being created, rather detecting credential file copies. NTDS.dit or SYSTEM whether a VSS copy or not.
+
+`
+SrcProcCmdline RegExp "^.*copy.*\\Windows\\NTDS\\NTDS.dit.*" OR SrcProcCmdline RegExp "^.*copy.*\\Windows\\System32\\config\\SYSTEM .*" OR SrcProcCmdline ContainsCIS "save HKLM\SYSTEM" OR (TgtProcName = "ntdsutil.exe" AND TgtProcCmdline ContainsCIS "ac i ntds") OR (TgtProcName = "mklink.exe" and  TgtProcCmdline RegExp "^.*\/[d,D].*GLOBALROOT\\Device\\HarddiskVolumeShadowCopy.*")
+`
 
 ### T1040 Network Sniffing
 Atomics: [T1040](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1040/T1040.md)
